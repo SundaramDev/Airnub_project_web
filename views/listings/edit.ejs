@@ -1,26 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WanderLust</title>
+    <title>Edit Listing - WanderLust</title>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #fdfbfb, #ebedee);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h3 {
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #222;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #ff7e5f;
+            box-shadow: 0 0 8px rgba(255, 126, 95, 0.2);
+            outline: none;
+        }
+
+        ::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+
+        button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            background: linear-gradient(to right,  #fe424d);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Flex container for price and location */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .row > div {
+            flex: 1 1 100%;
+        }
+
+        /* On wider screens, price and location side by side */
+        @media (min-width: 600px) {
+            .row > div {
+                flex: 1 1 calc(50% - 7.5px);
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h3>Edit Your Listing</h3>
     <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
-        <input name="listing[title]" value="<%= listing.title %>" type="text">
-        <br><br>
-        <textarea name="listing[description]" rows="4" cols="50"><%= listing.description %></textarea>
-        <br><br>
-        <input name="listing[image][url]" value="<%= listing.image %>" type="text">
-        <br><br>
-        <input name="listing[price]" value="<%= listing.price %>" type="number">
-        <br><br>
-        <input name="listing[country]" value="<%= listing.country %>" type="text">
-        <br><br>
-        <input name="listing[location]" value="<%= listing.location %>" type="text">
-        <br><br>
-        <button>Edit</button>
+        <h3>Edit Your Listing </h3>
+
+        <!-- Title -->
+        <div>
+            <label for="title">Title</label>
+            <input name="listing[title]" value="<%= listing.title %>" type="text" placeholder="E.g., Dreamy Mountain Retreat">
+        </div>
+
+        <!-- Description -->
+        <div>
+            <label for="description">Description</label>
+            <textarea name="listing[description]" rows="4" placeholder="Describe what makes this stay magical..."><%= listing.description %></textarea>
+        </div>
+
+        <!-- Image Link -->
+        <div>
+            <label for="image">Image Link</label>
+            <input name="listing[image][url]" value="<%= listing.image.url %>" type="text" placeholder="Your stunning property image URL">
+        </div>
+
+        <!-- Price and Location in one row -->
+        <div class="row">
+            <div>
+                <label for="price">Price</label>
+                <input name="listing[price]" value="<%= listing.price %>" type="number" placeholder="Nightly rate ($) – make it enticing!">
+            </div>
+
+            <div>
+                <label for="location">Location</label>
+                <input name="listing[location]" value="<%= listing.location %>" type="text" placeholder="City, neighborhood, or landmark (e.g., Aspen)">
+            </div>
+        </div>
+
+        <!-- Country -->
+        <div>
+            <label for="country">Country</label>
+            <input name="listing[country]" value="<%= listing.country %>" type="text" placeholder="Where in the world is your place?">
+        </div>
+
+        <button type="submit">Update Listing</button>
     </form>
 </body>
+
 </html>

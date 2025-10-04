@@ -1,24 +1,37 @@
 <% layout("/layouts/boilerplate") %>
 
-    <h3>Listing Details :</h3>
-     <img
-        src="<%= listing.image.url %>"
-        class="card-img-top show-img"
-        alt="Listing_image"
-      />
-    <ul>
+<div class="row">
+    <div class="col-8 offset-2">
 
-        <li><%= listing.title %></li>
-        <li><%= listing.description %></li>
-        <li>&#8377; <%= listing.price.toLocaleString("en-IN") %></li>
-        <li><%= listing.location %></li>
-        <li><%= listing.country %></li>
-    </ul>
-    <br>
-    <a href="/listings/<%= listing._id %>/edit">Edit this listing</a>
-    <br><br>
-    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-        <button>Delete this listing</button>
-    </form>
+        <h3 style="text-align:center; margin-bottom:20px; color:#333;"> Listing Details </h3>
 
+        <div class="card" style="padding:20px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.1); background-color:#fff; text-align:center;">
+            
+            <img
+                src="<%= listing.image.url %>"
+                class="card-img-top show-img"
+                alt="Listing_image"
+                style="width:100%; max-width:400px; border-radius:10px; margin-bottom:20px;"
+            />
 
+            <ul style="list-style:none; padding:0; text-align:left; margin-bottom:20px;">
+                <li><strong>Title:</strong> <%= listing.title %></li>
+                <li><strong>Description:</strong> <%= listing.description %></li>
+                <li><strong>Price:</strong> &#8377; <%= listing.price.toLocaleString("en-IN") %></li>
+                <li><strong>Location:</strong> <%= listing.location %></li>
+                <li><strong>Country:</strong> <%= listing.country %></li>
+            </ul>
+
+            <!-- Buttons in one row -->
+            <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
+                <a href="/listings/<%= listing._id %>/edit" style="padding:10px 20px; background: linear-gradient(to right, #222, #555); color:white; text-decoration:none; border-radius:6px; font-weight:600; transition: all 0.3s; text-align:center; flex:1 1 120px;">Edit Listing</a>
+
+                <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" style="flex:1 1 120px;">
+                    <button type="submit" style="padding:10px 20px; background:#ff4d4d; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:600; width:100%; transition: all 0.3s;">Delete Listing</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
