@@ -7,26 +7,20 @@ const listingSchema = new Schema({
         required: true,
     },
     description: String,
-    // image: {
-    //     type: String,
-    //     default:"https://unsplash.com/photos/turbulent-ocean-water-swirls-and-crashes-beautifully-XD5oKCerKCQ",
-    //     set: (v) =>
-    //         v === ""
-    //             ? "https://unsplash.com/photos/turbulent-ocean-water-swirls-and-crashes-beautifully-XD5oKCerKCQ"
-    //             : v,
-    // }, image: {
-    filename: {
-        type: String,
-        default: "listingimage",
-    },
-    url: {
-        type: String,
-        default:
-            "https://unsplash.com/photos/turbulent-ocean-water-swirls-and-crashes-beautifully-XD5oKCerKCQ",
-        set: (v) =>
-            v === ""
-                ? "https://unsplash.com/photos/turbulent-ocean-water-swirls-and-crashes-beautifully-XD5oKCerKCQ"
-                : v,
+    image: {
+        filename: {
+            type: String,
+            default: "listingimage",
+        },
+        url: {
+            type: String,
+            default:
+                "C:/Users/gamin/OneDrive/Desktop/first.jpg",
+            set: (v) =>
+                v === ""
+                    ? "C:/Users/gamin/OneDrive/Desktop/first.jpg"
+                    : v,
+        },
     },
     price: Number,
     location: String,
