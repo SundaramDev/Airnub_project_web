@@ -15,10 +15,10 @@ const listingSchema = new Schema({
         url: {
             type: String,
             default:
-                "C:/Users/gamin/OneDrive/Desktop/first.jpg",
+                "https://imgs.search.brave.com/SeUfc9cBP9Mwyqca9vkjDXc0b6Bnn9IsYp7VtZjEe_M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/cGl4YWJheS5jb20v/cGhvdG8vMjAxOC8w/MS8xMi8xNC8yNC9u/aWdodC0zMDc4MzI2/XzEyODAuanBn",
             set: (v) =>
                 v === ""
-                    ? "C:/Users/gamin/OneDrive/Desktop/first.jpg"
+                    ? "https://imgs.search.brave.com/SeUfc9cBP9Mwyqca9vkjDXc0b6Bnn9IsYp7VtZjEe_M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/cGl4YWJheS5jb20v/cGhvdG8vMjAxOC8w/MS8xMi8xNC8yNC9u/aWdodC0zMDc4MzI2/XzEyODAuanBn"
                     : v,
         },
     },
