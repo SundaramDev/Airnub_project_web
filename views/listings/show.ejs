@@ -3,35 +3,88 @@
 <div class="row">
     <div class="col-8 offset-2">
 
-        <h3 style="text-align:center; margin-bottom:20px; color:#333;"> Listing Details </h3>
+        <!-- Listing Title -->
+        <h3 class="text-center mb-4" style="color:#333;">
+            <%= listing.title %>
+        </h3>
 
-        <div class="card" style="padding:20px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.1); background-color:#fff; text-align:center;">
-            
-            <img
-                src="<%= listing.image.url %>"
-                class="card-img-top show-img"
-                alt="Listing_image"
-                style="width:100%; max-width:400px; border-radius:10px; margin-bottom:20px;"
-            />
+        <!-- Listing Card -->
+        <div class="card p-4 rounded shadow-sm text-center" style="background-color:#fff;">
+            <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="Listing_image"
+                style="width:100%; max-width:400px; border-radius:10px; margin-bottom:20px;" />
 
-            <ul style="list-style:none; padding:0; text-align:left; margin-bottom:20px;">
-                <li><strong>Title:</strong> <%= listing.title %></li>
+            <ul class="list-unstyled text-start mb-4">
                 <li><strong>Description:</strong> <%= listing.description %></li>
                 <li><strong>Price:</strong> &#8377; <%= listing.price.toLocaleString("en-IN") %></li>
                 <li><strong>Location:</strong> <%= listing.location %></li>
                 <li><strong>Country:</strong> <%= listing.country %></li>
             </ul>
 
-            <!-- Buttons in one row -->
-            <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
-                <a href="/listings/<%= listing._id %>/edit" style="padding:10px 20px; background: linear-gradient(to right, #222, #555); color:white; text-decoration:none; border-radius:6px; font-weight:600; transition: all 0.3s; text-align:center; flex:1 1 120px;">Edit Listing</a>
+            <!-- Edit & Delete Buttons -->
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="/listings/<%= listing._id %>/edit"
+                    class="flex-1 text-center px-3 py-2"
+                    style="background: linear-gradient(to right, #222, #555); color:white; text-decoration:none; border-radius:6px; font-weight:600; flex:1 1 120px; transition: all 0.3s;">
+                    Edit Listing
+                </a>
 
-                <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" style="flex:1 1 120px;">
-                    <button type="submit" style="padding:10px 20px; background:#ff4d4d; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:600; width:100%; transition: all 0.3s;">Delete Listing</button>
+                <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="flex-1" style="flex:1 1 120px;">
+                    <button type="submit"
+                        class="w-100 px-3 py-2"
+                        style="background:#ff4d4d; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:600; transition: all 0.3s;">
+                        Delete Listing
+                    </button>
                 </form>
             </div>
-
         </div>
+
+        <!-- Review Form -->
+<div class="col-12 mx-auto mb-4 p-4 border rounded shadow-sm mt-4" 
+     style="background-color:#fff; max-width:900px;">
+    <hr>
+    <h4 class="text-center mb-3" style="color:#333;">Leave a Review</h4>
+    <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
+
+        <!-- Rating -->
+        <div class="mb-3">
+            <label for="rating" class="form-label fw-bold">Rating</label>
+            <input type="range" min="1" max="5" id="rating" name="review[rating]" 
+                   class="form-range" style="accent-color:#ffb400; height: 8px;">
+        </div>
+
+        <!-- Comment -->
+        <div class="mb-3">
+            <label for="comment" class="form-label fw-bold">Comments</label>
+            <textarea name="review[comment]" id="comment" cols="30" rows="4" 
+                      class="form-control" placeholder="Write your review here..." required
+                      style="resize:none; background-color:#fff; font-size: 1rem; padding: 8px;"></textarea>
+            <div class="invalid-feedback">Please add some comment for reviews</div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-dark px-5 py-2" style="border-radius:25px; font-size: 1rem;">Submit</button>
+        </div>
+    </form>
+</div>
+
 
     </div>
 </div>
+
+<!-- Client-side validation -->
+<script>
+(() => {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+})();
+</script>
