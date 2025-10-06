@@ -19,11 +19,13 @@
         background-color: #fff;
         padding: 30px 40px;
         border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         max-width: 600px;
         width: 100%;
     }
-    h3 { font-weight: 700; margin-bottom: 25px; text-align: center; color: #222; }
+    h3 {
+        font-weight: 700; margin-bottom: 25px; text-align: center; color: #222;
+    }
     .form-label { display: block; margin-bottom: 6px; font-weight: 600; color: #555; }
     .form-control {
         width: 100%;
@@ -37,67 +39,35 @@
     }
     .form-control:focus {
         border-color: #ff7e5f;
-        box-shadow: 0 0 8px rgba(255, 126, 95, 0.2);
+        box-shadow: 0 0 8px rgba(255,126,95,0.2);
         outline: none;
     }
     ::placeholder { color: #aaa; font-style: italic; }
-    .btn {
-        padding: 10px 24px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 600;
-        width: 100%;
-        transition: all 0.3s ease;
-    }
-    .btn-dark {
-        background: linear-gradient(to right, #fe424d);
-        color: white;
-    }
-    .btn-dark:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
+    .btn { padding: 10px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600; width: 100%; transition: all 0.3s ease; }
+    .btn-dark { background: linear-gradient(to right, #fe424d); color: white; }
+    .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.2); }
     .row { display: flex; flex-wrap: wrap; gap: 15px; }
     .row>div { flex: 1 1 100%; }
     @media (min-width: 600px) { .row>div { flex: 1 1 calc(50% - 7.5px); } }
-
-    /* Validation CSS */
-    .was-validated .form-control:invalid {
-        border-color: #dc3545;
-    }
-    .was-validated .form-control:invalid:focus {
-        box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
-    }
-    .was-validated .form-control:valid {
-        border-color: #28a745;
-    }
-    .was-validated .form-control:valid:focus {
-        box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
-    }
-    .invalid-feedback, .valid-feedback {
-        display: none;
-        font-size: 0.9rem;
-        margin-bottom: 12px;
-    }
+    .was-validated .form-control:invalid { border-color: #dc3545; }
+    .was-validated .form-control:invalid:focus { box-shadow: 0 0 5px rgba(220,53,69,0.5); }
+    .was-validated .form-control:valid { border-color: #28a745; }
+    .was-validated .form-control:valid:focus { box-shadow: 0 0 5px rgba(40,167,69,0.5); }
+    .invalid-feedback, .valid-feedback { display: none; font-size: 0.9rem; margin-bottom: 12px; }
     .invalid-feedback { color: #dc3545; }
     .valid-feedback { color: #28a745; }
-    .was-validated .form-control:invalid ~ .invalid-feedback {
-        display: block;
-    }
-    .was-validated .form-control:valid ~ .valid-feedback {
-        display: block;
-    }
+    .was-validated .form-control:invalid ~ .invalid-feedback { display: block; }
+    .was-validated .form-control:valid ~ .valid-feedback { display: block; }
 </style>
 </head>
 <body>
+
 <form method="POST" action="/listings" class="needs-validation" novalidate>
-    <h3> Create Your Dream Listing </h3>
+    <h3>Create Your Dream Listing</h3>
 
     <div>
         <label class="form-label">Title</label>
-        <input name="listing[title]" placeholder="E.g., Cozy Mountain Cabin" type="text" class="form-control" required>
+        <input name="listing[title]" type="text" placeholder="E.g., Cozy Mountain Cabin" class="form-control" required>
         <div class="invalid-feedback">Please enter a valid title!</div>
         <div class="valid-feedback">Title looks good!</div>
     </div>
@@ -111,19 +81,19 @@
 
     <div>
         <label class="form-label">Image Link</label>
-        <input name="listing[image][url]" placeholder="Paste your image URL here" type="text" class="form-control">
+        <input name="listing[image][url]" type="text" placeholder="Paste your image URL here" class="form-control">
     </div>
 
     <div class="row">
         <div>
             <label class="form-label">Price</label>
-            <input name="listing[price]" placeholder="Enter nightly rate ₹ " type="number" class="form-control" min="0" required>
+            <input name="listing[price]" type="number" min="0" placeholder="Nightly rate ₹" class="form-control" required>
             <div class="invalid-feedback">Please enter a valid price!</div>
             <div class="valid-feedback">Price looks good!</div>
         </div>
         <div>
             <label class="form-label">Location</label>
-            <input name="listing[location]" placeholder="City or area (e.g., Aspen)" type="text" class="form-control" required>
+            <input name="listing[location]" type="text" placeholder="City or area (e.g., Aspen)" class="form-control" required>
             <div class="invalid-feedback">Please enter a valid location!</div>
             <div class="valid-feedback">Location looks good!</div>
         </div>
@@ -131,7 +101,7 @@
 
     <div>
         <label class="form-label">Country</label>
-        <input name="listing[country]" placeholder="Where in the world is it?" type="text" class="form-control" required>
+        <input name="listing[country]" type="text" placeholder="Where in the world is it?" class="form-control" required>
         <div class="invalid-feedback">Please enter a valid country!</div>
         <div class="valid-feedback">Country looks good!</div>
     </div>
@@ -142,21 +112,18 @@
 <script>
 (() => {
     'use strict'
-
-    const forms = document.querySelectorAll('.needs-validation')
-
+    const forms = document.querySelectorAll('.needs-validation');
     Array.from(forms).forEach(form => {
         form.addEventListener('submit', event => {
             if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
+                event.preventDefault();
+                event.stopPropagation();
             }
-            form.classList.add('was-validated')
-        }, false)
-    })
-})()
+            form.classList.add('was-validated');
+        }, false);
+    });
+})();
 </script>
-</body>
 
 </body>
 </html>
