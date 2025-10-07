@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WanderLust</title>
+<title>WanderLust - Create Listing</title>
 <style>
     body {
         font-family: 'Plus Jakarta Sans', sans-serif;
@@ -24,7 +24,10 @@
         width: 100%;
     }
     h3 {
-        font-weight: 700; margin-bottom: 25px; text-align: center; color: #222;
+        font-weight: 700; 
+        margin-bottom: 25px; 
+        text-align: center; 
+        color: #222;
     }
     .form-label { display: block; margin-bottom: 6px; font-weight: 600; color: #555; }
     .form-control {
@@ -62,9 +65,10 @@
 </head>
 <body>
 
-<form method="POST" action="/listings" class="needs-validation" novalidate>
+<form method="POST" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
     <h3>Create Your Dream Listing</h3>
 
+    <!-- Title -->
     <div>
         <label class="form-label">Title</label>
         <input name="listing[title]" type="text" placeholder="E.g., Cozy Mountain Cabin" class="form-control" required>
@@ -72,6 +76,7 @@
         <div class="valid-feedback">Title looks good!</div>
     </div>
 
+    <!-- Description -->
     <div>
         <label class="form-label">Description</label>
         <textarea name="listing[description]" placeholder="Tell visitors what makes it special..." class="form-control" required></textarea>
@@ -79,11 +84,13 @@
         <div class="valid-feedback">Description looks good!</div>
     </div>
 
+    <!-- Image Upload -->
     <div>
-        <label class="form-label">Image Link</label>
-        <input name="listing[image][url]" type="text" placeholder="Paste your image URL here" class="form-control">
+        <label class="form-label">Upload Listing Image</label>
+        <input type="file" name="imageFile" class="form-control">
     </div>
 
+    <!-- Price & Location -->
     <div class="row">
         <div>
             <label class="form-label">Price</label>
@@ -99,6 +106,7 @@
         </div>
     </div>
 
+    <!-- Country -->
     <div>
         <label class="form-label">Country</label>
         <input name="listing[country]" type="text" placeholder="Where in the world is it?" class="form-control" required>
@@ -106,12 +114,13 @@
         <div class="valid-feedback">Country looks good!</div>
     </div>
 
+    <!-- Submit -->
     <button class="btn btn-dark">Add Listing</button>
 </form>
 
 <script>
 (() => {
-    'use strict'
+    'use strict';
     const forms = document.querySelectorAll('.needs-validation');
     Array.from(forms).forEach(form => {
         form.addEventListener('submit', event => {
