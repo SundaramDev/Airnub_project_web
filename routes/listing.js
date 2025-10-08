@@ -27,8 +27,8 @@ router.route("/:id")
     .put(
         isLoggedIn,
         isOwner,
-        validateListing,
         upload.single("imageFile"), // Handle new image upload when updating
+        validateListing,
         wrapAsync(listingController.updateListing)
     )
     .delete(

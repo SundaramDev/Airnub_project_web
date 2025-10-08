@@ -1,7 +1,6 @@
-if(process.env.NODE_ENV!="production"){
-require(`dotenv`).config();
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
 }
-
 
 const express = require("express");
 const app = express();
@@ -14,22 +13,29 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
+
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const { listingSchema } = require("./schema.js"); 
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+// Fix typo in env variable name
+const dbUrl = process.env.ATLASDB_URL;
 
 // MongoDB connection
 async function main() {
-  await mongoose.connect(MONGO_URL);
+    if (!dbUrl) {
+        throw new Error("ATLASDB_URL is not defined in .env");
+    }
+    await mongoose.connect(dbUrl);
+    console.log("Connected to MongoDB Atlas");
 }
 
 main()
-  .then(() => console.log("Connected to DB"))
-  .catch((err) => console.log(err));
+    .then(() => console.log("Connected to DB"))
+    .catch((err) => console.log(err));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -38,16 +44,28 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 
-// Session config
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: "mysupersecretcode",
+    },
+    touchAfter: 24 * 3600, // time period in seconds
+});
+
+store.on("error", (err) => {
+    console.log("ERROR in MONGO SESSION STORE", err);
+});
+
 const sessionOptions = {
-  secret: "mysuppersecretcode",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    httpOnly: true,
-  },
+    store,
+    secret: "mysupersecretcode",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 1 week
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
+        httpOnly: true,
+    },
 };
 
 app.use(session(sessionOptions)); 
@@ -57,60 +75,46 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
-
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 // Middleware for flash messages
 app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  res.locals.currUser = req.user;
-  next();
-});
-
-// Root route
-app.get("/", (req, res) => {
-  res.send("Hi, I am root");
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
+    next();
 });
 
 // Validation Middleware
 const validateListing = (req, res, next) => {
-  const { error } = listingSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(400, msg);
-  } else {
-    next();
-  }
+    const { error } = listingSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, msg);
+    } else {
+        next();
+    }
 };
 
-// app.get("/demouser", async (req, res) => {
-//   let fakeUser = new User({
-//     email: "student@gmail.com",
-//     username: "delta-student",
-//   });
-//   let registeredUser = await User.register(fakeUser, "helloworld");
-//   res.send(registeredUser);
-// });
-
+// Routers
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
 // Error handling
 app.use((req, res, next) => {
-  next(new ExpressError(404, "Page not found!"));
+    next(new ExpressError(404, "Page not found!"));
 });
 
 app.use((err, req, res, next) => {
-  const { statusCode = 500 } = err;
-  if (!err.message) err.message = "Something went wrong!";
-  res.status(statusCode).render("error", { err });
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = "Something went wrong!";
+    res.status(statusCode).render("error", { err });
 });
 
 // Server
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });

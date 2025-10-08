@@ -63,7 +63,7 @@
         font-size: 16px;
         font-weight: 600;
         width: 100%;
-        background: linear-gradient(to right,  #fe424d);
+        background: linear-gradient(to right, #fe424d);
         color: white;
         transition: all 0.3s ease;
     }
@@ -84,8 +84,6 @@
             flex: 1 1 calc(50% - 7.5px);
         }
     }
-
-    /* Validation CSS */
     .was-validated input:invalid, .was-validated textarea:invalid {
         border-color: #dc3545;
     }
@@ -116,7 +114,7 @@
 </head>
 
 <body>
-<form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate>
+<form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data">
     <h3>Edit Your Listing</h3>
 
     <div>
@@ -132,14 +130,21 @@
         <div class="invalid-feedback">Please enter a description!</div>
         <div class="valid-feedback">Description looks good!</div>
     </div>
-
-   <div>
-    <label for="image">Image Link</label>
-    <input name="listing[image][url]" value="<%= listing.image.url %>" type="text" placeholder="Your stunning property image URL" required>
-    <div class="invalid-feedback">Please enter a valid image URL!</div>
-    <div class="valid-feedback">Image URL looks good!</div>
+     <div class="mb-3 text-center">
+    <!-- Current image preview -->
+     Original listing image<br>
+    <img 
+        src="<%= originalImageUrl %>" 
+        alt="Current Listing Image"
+        style="width: 150px; height: 100px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); margin-bottom: 10px;"
+    />
 </div>
 
+    <div>
+        <label for="imageFile">Upload New Image</label>
+        <input type="file" name="imageFile" class="form-control">
+        <div class="valid-feedback">Image selected!</div>
+    </div>
 
     <div class="row">
         <div>
@@ -182,6 +187,5 @@
     })
 })()
 </script>
-<!-- <script src="/js/script.js"></script> -->
 </body>
 </html>
