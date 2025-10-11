@@ -1,8 +1,11 @@
 # Wanderlust | Travel & Accommodation Platform
+[![Wanderlust Screenshot](public/image.png)](https://airnub-project-web.onrender.com/listings)
+
+---
 
 Wanderlust is a **full-stack web application** designed to be a modern travel and accommodation booking platform.  
 It allows users to **browse, create, and manage listings** for unique stays and experiences worldwide.  
-Built using the **Model-View-Controller (MVC) pattern**, it ensures a clean separation of concerns and a scalable codebase.  
+Built using the **Model-View-Controller (MVC) pattern**, it ensures a clean separation of concerns and a scalable codebase.
 
 Whether you're looking for a cozy cabin in the woods or a vibrant city apartment, Wanderlust connects you with a diverse range of accommodations.
 
