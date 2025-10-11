@@ -117,5 +117,28 @@ node app.js
 http://localhost:3000
 ```
 
+##  Contact Me
+
+I'm passionate about web development and always open to connecting with other developers or exploring new opportunities.
+
+💼 LinkedIn: [linkedin.com/in/sundaram-5695b629a](https://www.linkedin.com/in/sundaram-5695b629a/)  
+📧 Email: [sundaram95802@gmail.com](mailto:sundaram95802@gmail.com)  
+💻 GitHub: [github.com/Sundaram-Dev](https://github.com/SundaramDev)
+
+---
+
+## This README includes:
+
+- Project overview  
+- Features  
+- Tech stack  
+- Complete folder structure  
+- Setup instructions with `.env` guidance  
+- Screenshot linking to live site  
+- Professional contact links with **new tab behavior**  
+
+---
+
+
 
 
